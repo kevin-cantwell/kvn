@@ -17,7 +17,7 @@ import (
 func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/", IndexHandler)
-	r.HandleFunc("/image.gif", GifHandler)
+	r.HandleFunc("/image", GifHandler)
 	http.Handle("/", r)
 	if err := http.ListenAndServe(":"+os.Getenv("PORT"), nil); err != nil {
 		panic(err)
