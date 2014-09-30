@@ -1,8 +1,29 @@
 <html>
+<head>
+  <style>
+  body {
+    font-size: 45px;
+    font-family: 'courier new';
+  }
+  #content {
+    margin: 0 auto;
+    margin-top: 200px;
+    text-align: center;
+  }
+  input {
+    width: 400px;
+    font-size: 40px;
+  }
+  </style>
+</head>
 <body>
-  <input id="in" />
+  <form id="target" action="image.gif" method="GET">
+    <div id="content">
+      Shoooooot: <input id="query" name="q" type="text" value="">
+    </div>
+  </form>
   <script>
-    document.getElementByID('in')
+    document.getElementById("query").focus();
   </script>
 </body>
 </html>
