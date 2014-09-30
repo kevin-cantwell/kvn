@@ -19,7 +19,7 @@ func main() {
 	r.HandleFunc("/", IndexHandler)
 	r.HandleFunc("/image.gif", GifHandler)
 	http.Handle("/", r)
-	if err := http.ListenAndServe(":8080", nil); err != nil {
+	if err := http.ListenAndServe(":"+os.Getenv("PORT"), nil); err != nil {
 		panic(err)
 	}
 }
