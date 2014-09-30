@@ -1,18 +1,31 @@
 <html>
 <head>
   <style>
+  body {
+    margin: 0;
+    padding: 0;
+  }
   #content {
     margin: 0 auto;
     text-align: center;
   }
-  #content img {
+  .mobile-friendly {
     width: 100%;
+  }
+  .desktop-friendly {
+    height: 100%;
   }
   </style>
 </head>
 <body>
   <div id="content">
-    <img src="{{.GifUrl}}" />
+    <img id="img" class="mobile-friendly" src="{{.GifUrl}}" />
   </div>
+  <script>
+    if (window.innerWidth > window.innerHeight) {
+      el = document.getElementById('img')
+      el.className = "desktop-friendly"
+    }
+  </script>
 </body>
 </html>
