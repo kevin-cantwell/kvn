@@ -5,26 +5,30 @@
     margin: 0;
     padding: 0;
   }
-  #content {
+  .content {
     margin: 0 auto;
     text-align: center;
+    padding: 10px;
   }
   .mobile-friendly {
     width: 100%;
   }
   .desktop-friendly {
-    height: 100%;
+    width: 40%;
   }
   </style>
 </head>
 <body>
-  <div id="content">
-    <img id="img" class="mobile-friendly" src="{{.GifUrl}}" />
+  {{range $url := .Urls}}
+  <div class="content">
+    <img id="img" class="mobile-friendly" src="{{$url}}" />
   </div>
+  {{end}}
   <script>
     if (window.innerWidth > window.innerHeight) {
-      el = document.getElementById('img')
-      el.className = "desktop-friendly"
+      el = document.getElementsByTagName('img')
+      for (i = 0; i < el.length; i++)
+      el.item(i).className = "desktop-friendly"
     }
   </script>
 </body>

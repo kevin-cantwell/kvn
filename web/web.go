@@ -2,9 +2,10 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
-	"math/rand"
+	"log"
 	"net/http"
 	"net/url"
 	"os"
@@ -19,16 +20,22 @@ func main() {
 	r.HandleFunc("/", IndexHandler)
 	r.HandleFunc("/image", GifHandler)
 	http.Handle("/", r)
+	log.Println("http://localhost:" + os.Getenv("PORT"))
 	if err := http.ListenAndServe(":"+os.Getenv("PORT"), nil); err != nil {
 		panic(err)
 	}
 }
 
+func writeError(response http.ResponseWriter, err error, msg string) {
+	response.WriteHeader(http.StatusInternalServerError)
+	log.Println("ERROR: ", err.Error())
+	response.Write([]byte(msg))
+}
+
 func IndexHandler(response http.ResponseWriter, request *http.Request) {
 	t, err := template.ParseFiles("index.html")
 	if err != nil {
-		response.WriteHeader(http.StatusInternalServerError)
-		response.Write([]byte(err.Error()))
+		writeError(response, err, "An unknown error occured")
 		return
 	}
 	t.Execute(response, nil)
@@ -38,8 +45,7 @@ func GifHandler(response http.ResponseWriter, request *http.Request) {
 	request.ParseForm()
 	q := request.Form["q"]
 	if len(q) < 1 {
-		response.WriteHeader(http.StatusInternalServerError)
-		response.Write([]byte("no query specified"))
+		writeError(response, errors.New("No query specified"), "No query specified")
 		return
 	}
 
@@ -47,80 +53,59 @@ func GifHandler(response http.ResponseWriter, request *http.Request) {
 
 	apiKey := os.Getenv("GIPHY_API_KEY")
 	if apiKey == "" {
-		response.WriteHeader(http.StatusInternalServerError)
-		response.Write([]byte("y u no set GIPHY_API_KEY???"))
+		writeError(response, errors.New("y u no set GIPHY_API_KEY???"), "An unknown error occured")
 		return
 	}
 
 	fmt.Println(q)
 	resp, err := http.Get("http://api.giphy.com/v1/gifs/search?q=" + url.QueryEscape(query) + "&api_key=" + apiKey)
 	if err != nil {
-		response.WriteHeader(http.StatusInternalServerError)
-		response.Write([]byte(err.Error()))
+		writeError(response, err, "An unknown error occured")
 		return
 	}
 	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		response.WriteHeader(http.StatusInternalServerError)
-		response.Write([]byte(err.Error()))
+		writeError(response, err, "An unknown error occured")
 		return
 	}
 
 	var giphyResp jsn.Data
 	if err = json.Unmarshal(body, &giphyResp); err != nil {
-		response.WriteHeader(http.StatusInternalServerError)
-		response.Write([]byte(err.Error()))
+		writeError(response, err, "An unknown error occured")
 		return
 	}
 
 	var data []interface{}
 	if data, err = giphyResp.Array("data"); err != nil {
-		response.WriteHeader(http.StatusInternalServerError)
-		response.Write([]byte(err.Error()))
+		writeError(response, err, "An unknown error occured")
 		return
 	}
 	if len(data) == 0 {
-		response.WriteHeader(http.StatusInternalServerError)
-		response.Write([]byte("no images found"))
+		writeError(response, err, "No images could be found for your query :(")
 		return
 	}
 
-	var image map[string]interface{}
-	var ok bool
-	if image, ok = data[rand.Intn(len(data))].(map[string]interface{}); !ok {
-		response.WriteHeader(http.StatusInternalServerError)
-		response.Write([]byte("image item is not an object"))
-		return
-	}
-
-	var url string
-	if url, err = jsn.Data(image).String("images.original.url"); err != nil {
-		response.WriteHeader(http.StatusInternalServerError)
-		response.Write([]byte(err.Error()))
-		return
+	urls := make([]string, len(data))
+	for i, img := range data {
+		var image map[string]interface{}
+		var ok bool
+		if image, ok = img.(map[string]interface{}); !ok {
+			writeError(response, err, "An unknown error occured")
+			return
+		}
+		if urls[i], err = jsn.Data(image).String("images.original.url"); err != nil {
+			writeError(response, err, "An unknown error occured")
+			return
+		}
 	}
 
 	t, err := template.ParseFiles("gif.html")
 	if err != nil {
-		response.WriteHeader(http.StatusInternalServerError)
-		response.Write([]byte(err.Error()))
+		writeError(response, err, "An unknown error occured")
 		return
 	}
-	p := struct{ GifUrl string }{GifUrl: url}
+	p := struct{ Urls []string }{Urls: urls}
 	t.Execute(response, &p)
 }
-
-// func ClockHandler(response http.ResponseWriter, request *http.Request) {
-// 	vars := mux.Vars(request)
-// 	tzCode := vars["tzCode"]
-// 	t, err := template.ParseFiles("clock.html")
-// 	if err != nil {
-// 		response.WriteHeader(http.StatusInternalServerError)
-// 		response.Write([]byte(err.Error()))
-// 		return
-// 	}
-// 	p := struct{ Timezone string }{Timezone: tzCode}
-// 	t.Execute(response, &p)
-// }
