@@ -28,7 +28,11 @@ func main() {
 
 func writeError(response http.ResponseWriter, err error, msg string) {
 	response.WriteHeader(http.StatusInternalServerError)
-	log.Println("ERROR: ", err.Error())
+	if err != nil {
+		log.Println("ERROR:", err.Error(), msg)
+	} else {
+		log.Println("ERROR:", msg)
+	}
 	response.Write([]byte(msg))
 }
 
@@ -83,7 +87,7 @@ func GifHandler(response http.ResponseWriter, request *http.Request) {
 		return
 	}
 	if len(data) == 0 {
-		writeError(response, err, "No images could be found for your query :(")
+		writeError(response, errors.New("no can haz"), "No images could be found for your query :(")
 		return
 	}
 
