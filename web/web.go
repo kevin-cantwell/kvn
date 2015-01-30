@@ -6,16 +6,20 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"math/rand"
 	"net/http"
 	"net/url"
 	"os"
 	"text/template"
+	"time"
 
 	"github.com/gorilla/mux"
 	jsn "github.com/timehop/goth/json"
 )
 
 func main() {
+	rand.Seed(time.Now().Unix())
+
 	r := mux.NewRouter()
 	r.HandleFunc("/", IndexHandler)
 	r.HandleFunc("/image", GifHandler)
@@ -92,6 +96,7 @@ func GifHandler(response http.ResponseWriter, request *http.Request) {
 	}
 
 	urls := make([]string, len(data))
+
 	for i, img := range data {
 		var image map[string]interface{}
 		var ok bool
@@ -110,6 +115,8 @@ func GifHandler(response http.ResponseWriter, request *http.Request) {
 		writeError(response, err, "An unknown error occured")
 		return
 	}
-	p := struct{ Urls []string }{Urls: urls}
+
+	n := rand.Intn(len(urls))
+	p := struct{ Urls []string }{Urls: []string{urls[n]}}
 	t.Execute(response, &p)
 }

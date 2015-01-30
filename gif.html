@@ -4,6 +4,11 @@
   body {
     margin: 0;
     padding: 0;
+    font-family: 'courier new';
+  }
+  .meh {
+    font-size: 40px;
+    padding: 30px 0;
   }
   .content {
     margin: 0 auto;
@@ -19,11 +24,12 @@
   </style>
 </head>
 <body>
-  {{range $url := .Urls}}
   <div class="content">
+  <div class="meh">Not what you wanted? <a href="javascript:history.go(0);">Try again.</a></div>
+  {{range $url := .Urls}}
     <img id="img" class="mobile-friendly" src="{{$url}}" />
-  </div>
   {{end}}
+  </div>
   <script>
     if (window.innerWidth > window.innerHeight) {
       el = document.getElementsByTagName('img')
