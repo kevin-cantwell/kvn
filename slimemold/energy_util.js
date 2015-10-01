@@ -142,13 +142,11 @@ function calculateEnergyIf(grid, pos, targetCell)
         grid
     );
 
-    if(currentState == constants.OCCUPIED_ORGANISM && 
-        newState == constants.UNOCCUPIED)
+    if((currentState == constants.OCCUPIED_ORGANISM || currentState == constants.OCCUPIED_ORGANISM_ENEMY) && newState == constants.UNOCCUPIED)
     {
         return -candidateEnergy;
     }
-    else if(currentState == constants.UNOCCUPIED && 
-        newState == constants.OCCUPIED_ORGANISM)
+    else if(currentState == constants.UNOCCUPIED && (newState == constants.OCCUPIED_ORGANISM || newState == constants.OCCUPIED_ORGANISM_ENEMY))
     {
         return candidateEnergy;
     }

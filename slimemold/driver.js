@@ -32,13 +32,23 @@ $(document).ready(function() {
         0
     );
     testGrid.setCell(startFood);
+
     startX = Math.floor((Math.random() * constants.GRID_HORIZ_SPACES) + 1)
     startY = Math.floor((Math.random() * constants.GRID_VERT_SPACES) + 1)
-    console.log(startX, startY)
     startOrganismPos = new models.GridPosition(startX, startY);
     startOrganism = new models.GridCell(
         startOrganismPos,
         constants.OCCUPIED_ORGANISM,
+        0
+    );
+    testGrid.setCell(startOrganism);
+
+    startX = Math.floor((Math.random() * constants.GRID_HORIZ_SPACES) + 1)
+    startY = Math.floor((Math.random() * constants.GRID_VERT_SPACES) + 1)
+    startOrganismPos = new models.GridPosition(startX, startY);
+    startOrganism = new models.GridCell(
+        startOrganismPos,
+        constants.OCCUPIED_ORGANISM_ENEMY,
         0
     );
     testGrid.setCell(startOrganism);

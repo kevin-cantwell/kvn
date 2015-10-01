@@ -130,7 +130,8 @@ function getCellStateCoordiantes(grid, x, y)
 **/
 function isCoordianteOccupiedByOrganism(grid, x, y)
 {
-    return getCellStateCoordiantes(grid, x, y) == constants.OCCUPIED_ORGANISM;
+    cell = getCellStateCoordiantes(grid, x, y)
+    return (cell == constants.OCCUPIED_ORGANISM) || (cell == constants.OCCUPIED_ORGANISM_ENEMY);
 }
 
 

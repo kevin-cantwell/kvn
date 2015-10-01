@@ -72,6 +72,7 @@ function GridPosition(x, y)
 **/
 function GridCell(pos, state, energy)
 {
+                        console.log(pos, state, energy)
     /**
      * Get the position of this cell.
      *
@@ -265,9 +266,9 @@ function Grid(xSize, ySize)
         if(replaceState == oldState)
             return volume;
 
-        if(replaceState == constants.OCCUPIED_ORGANISM)
+        if((replaceState == constants.OCCUPIED_ORGANISM) || (replaceState == constants.OCCUPIED_ORGANISM_ENEMY))
             return volume + 1;
-        else if(oldState == constants.OCCUPIED_ORGANISM)
+        else if((oldState == constants.OCCUPIED_ORGANISM) || (oldState == constants.OCCUPIED_ORGANISM_ENEMY))
             return volume - 1;
     }
 
@@ -335,7 +336,7 @@ function Grid(xSize, ySize)
         setCellNoChem(replacementCell);
 
         // Update chemical field
-        if(targetCell.getState() == constants.OCCUPIED_ORGANISM)
+        if((targetCell.getState() == constants.OCCUPIED_ORGANISM) || (targetCell.getState() == constants.OCCUPIED_ORGANISM_ENEMY))
         {
             updateChemicalField(
                 pos,
@@ -345,7 +346,7 @@ function Grid(xSize, ySize)
         }
         
         var newState = replacementCell.getState();
-        if(newState == constants.OCCUPIED_ORGANISM)
+        if((newState == constants.OCCUPIED_ORGANISM) || (newState == constants.OCCUPIED_ORGANISM_ENEMY))
         {
             updateChemicalField(
                 pos,
@@ -373,9 +374,9 @@ function Grid(xSize, ySize)
         // Update volume, connected food sources, and active positions
         var neighbor;
         var neighbors;
-        if(replacementCell.getState() == constants.OCCUPIED_ORGANISM)
+        if((replacementCell.getState() == constants.OCCUPIED_ORGANISM) || (replacementCell.getState() == constants.OCCUPIED_ORGANISM_ENEMY))
         {
-            if(targetCell.getState() != constants.OCCUPIED_ORGANISM)
+            if((targetCell.getState() != constants.OCCUPIED_ORGANISM) && (targetCell.getState() != constants.OCCUPIED_ORGANISM_ENEMY))
                 volume++;
 
             neighbors = grid_util.getNeighbors(this, replacementCell);
@@ -402,9 +403,9 @@ function Grid(xSize, ySize)
 
             setActive(pos);
         }
-        else if(targetCell.getState() == constants.OCCUPIED_ORGANISM)
+        else if((targetCell.getState() == constants.OCCUPIED_ORGANISM) || (targetCell.getState() == constants.OCCUPIED_ORGANISM_ENEMY))
         {
-            if(replacementCell.getState() != constants.OCCUPIED_ORGANISM)
+            if((replacementCell.getState() != constants.OCCUPIED_ORGANISM) && (replacementCell.getState() != constants.OCCUPIED_ORGANISM_ENEMY))
                 volume--;
         }
     }

@@ -62,6 +62,10 @@ function displayGrid(grid)
                     draw = true;
                     drawColor = "#81B281";
                     break;
+                case OCCUPIED_ORGANISM_ENEMY:
+                    draw = true;
+                    drawColor = "#FF6600";
+                    break;
                 case OCCUPIED_OBSTACLE:
                     draw = true;
                     drawColor = "#C0C0C0";
