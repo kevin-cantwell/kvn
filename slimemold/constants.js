@@ -31,8 +31,8 @@ var YIELD_OFFSET = 0.1;
 var DISPLAY_CANVAS_ID = "#display-canvas";
 var CANVAS_WIDTH = window.innerWidth;
 var CANVAS_HEIGHT = window.innerHeight;
-var SPACE_WIDTH = 5;
-var SPACE_HEIGHT = 5;
+var SPACE_WIDTH = 10;
+var SPACE_HEIGHT = 10;
 
 var GRID_HORIZ_SPACES = Math.floor(CANVAS_WIDTH / SPACE_WIDTH);
 var GRID_VERT_SPACES = Math.floor(CANVAS_HEIGHT / SPACE_HEIGHT);
