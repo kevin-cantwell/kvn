@@ -1,0 +1,21 @@
+{
+	"ImportPath": "github.com/kevin-cantwell/shoooooooot",
+	"GoVersion": "go1.5",
+	"Packages": [
+		"./..."
+	],
+	"Deps": [
+		{
+			"ImportPath": "github.com/gorilla/context",
+			"Rev": "215affda49addc4c8ef7e2534915df2c8c35c6cd"
+		},
+		{
+			"ImportPath": "github.com/gorilla/mux",
+			"Rev": "f15e0c49460fd49eebe2bcc8486b05d1bef68d3a"
+		},
+		{
+			"ImportPath": "github.com/timehop/goth/json",
+			"Rev": "5b49871e51336a3c916c391241365ab8b0324405"
+		}
+	]
+}
