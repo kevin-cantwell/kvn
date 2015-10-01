@@ -53,7 +53,7 @@ $(document).ready(function() {
     );
     testGrid.setCell(startOrganism);
     view.displayGrid(testGrid);
-    window.setInterval(updateSimulation, 150);
+    window.setInterval(updateSimulation, 50);
 });
 
 
