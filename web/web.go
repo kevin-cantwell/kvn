@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"path/filepath"
 	"text/template"
 	"time"
 
@@ -23,6 +24,8 @@ func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/", IndexHandler)
 	r.HandleFunc("/image", GifHandler)
+	r.HandleFunc("/slimemold", SlimeMoldHandler)
+	r.HandleFunc("/slimemold/{asset}", SlimeMoldAssetHandler)
 	http.Handle("/", r)
 	log.Println("http://localhost:" + os.Getenv("PORT"))
 	if err := http.ListenAndServe(":"+os.Getenv("PORT"), nil); err != nil {
@@ -47,6 +50,20 @@ func IndexHandler(response http.ResponseWriter, request *http.Request) {
 		return
 	}
 	t.Execute(response, nil)
+}
+
+func SlimeMoldHandler(response http.ResponseWriter, request *http.Request) {
+	t, err := template.ParseFiles("slimemold/slime_mold.html")
+	if err != nil {
+		writeError(response, err, "An unknown error occured")
+		return
+	}
+	t.Execute(response, nil)
+}
+
+func SlimeMoldAssetHandler(response http.ResponseWriter, request *http.Request) {
+	asset := mux.Vars(request)["asset"]
+	http.ServeFile(response, request, filepath.Join("slimemold", asset))
 }
 
 func GifHandler(response http.ResponseWriter, request *http.Request) {
