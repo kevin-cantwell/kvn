@@ -25,14 +25,14 @@ var OCCUPIED_OBSTACLE = 2;
 var OCCUPIED_ORGANISM = 3;
 var OCCUPIED_CONNECTED_FOOD = 4;
 
-var VOLUME_WEIGHT = 0.002;
+var VOLUME_WEIGHT = 0.1;
 var YIELD_OFFSET = 0.1;
 
 var DISPLAY_CANVAS_ID = "#display-canvas";
 var CANVAS_WIDTH = window.innerWidth;
 var CANVAS_HEIGHT = window.innerHeight;
-var SPACE_WIDTH = 10;
-var SPACE_HEIGHT = 10;
+var SPACE_WIDTH = 7;
+var SPACE_HEIGHT = 7;
 
 var GRID_HORIZ_SPACES = Math.floor(CANVAS_WIDTH / SPACE_WIDTH);
 var GRID_VERT_SPACES = Math.floor(CANVAS_HEIGHT / SPACE_HEIGHT);
