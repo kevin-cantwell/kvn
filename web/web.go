@@ -15,10 +15,13 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
+	"github.com/kevin-cantwell/kvn/docgifs"
 	jsn "github.com/timehop/goth/json"
 )
 
 func main() {
+	go docgifs.PeriodicallyRefresh()
+
 	rand.Seed(time.Now().Unix())
 
 	r := mux.NewRouter()
@@ -26,6 +29,7 @@ func main() {
 	r.HandleFunc("/image", GifHandler)
 	r.HandleFunc("/slimemold", SlimeMoldHandler)
 	r.HandleFunc("/slimemold/{asset}", SlimeMoldAssetHandler)
+	r.HandleFunc("/docgif", DocGifHandler)
 	http.Handle("/", r)
 	log.Println("http://localhost:" + os.Getenv("PORT"))
 	if err := http.ListenAndServe(":"+os.Getenv("PORT"), nil); err != nil {
@@ -64,6 +68,18 @@ func SlimeMoldHandler(response http.ResponseWriter, request *http.Request) {
 func SlimeMoldAssetHandler(response http.ResponseWriter, request *http.Request) {
 	asset := mux.Vars(request)["asset"]
 	http.ServeFile(response, request, filepath.Join("slimemold", asset))
+}
+
+func DocGifHandler(response http.ResponseWriter, request *http.Request) {
+	page := docgifs.CurrentPage()
+	fmt.Println("docgif:", `"doc gif `+page.SearchText+`"`, page.GiphyURL)
+
+	t, err := template.ParseFiles("docgifs/docgifs.html")
+	if err != nil {
+		http.Error(response, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	t.Execute(response, page)
 }
 
 func GifHandler(response http.ResponseWriter, request *http.Request) {

@@ -1,0 +1,47 @@
+<html>
+<head>
+  <link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+  <style type="text/css">
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: black;
+    }
+    #giphy {
+      position: absolute;
+      bottom: 0;
+      height: 85%;
+      width: 100%;
+      text-align: center;
+      display: block;
+      margin: auto;
+    }
+    #giphy img {
+      height: 95%;
+    }
+    #search {
+      position: absolute;
+      width: 100%;
+      top: 2%;
+      text-align: center;
+      font-family: 'Lato', sans-serif; 
+      font-weight: bold;
+      color: #CCCCCC;
+    }
+  </style>
+</head>
+<body>
+  <div id="giphy">
+    <img src="{{ .GiphyURL }}" />
+  </div>
+  <div id="search">
+    <q>doc gif {{ .SearchText }}</q>
+  </div>
+  <script type="text/javascript">
+    document.getElementById("search").style.fontSize = window.innerHeight / 10;
+    window.setInterval(function(){
+      window.location.reload(true);
+    }, 5000);
+  </script>
+</body>
+</html>
