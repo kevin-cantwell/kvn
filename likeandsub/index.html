@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <script src="https://unpkg.com/merge-images"></script>
+</head>
+<body>
+  <img />
+  <script type="text/javascript">
+  mergeImages(['likeandsub_trans.png', 'https://raw.githubusercontent.com/lukechilds/merge-images/HEAD/test/fixtures/body.png'])
+    .then(b64 => document.querySelector('img').src = b64);
+  </script>
+</body>
+</html>

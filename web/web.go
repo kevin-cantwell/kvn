@@ -31,6 +31,7 @@ func main() {
 	r.HandleFunc("/slimemold/{asset}", SlimeMoldAssetHandler)
 	r.HandleFunc("/docgif", DocGifHandler)
 	r.HandleFunc("/hotwaterbling", HotwaterBlingHandler)
+	r.HandleFunc("/likeandsubscribe", LikeAndSubscribeHandler)
 	http.Handle("/", r)
 	log.Println("http://localhost:" + os.Getenv("PORT"))
 	if err := http.ListenAndServe(":"+os.Getenv("PORT"), nil); err != nil {
@@ -157,6 +158,15 @@ func GifHandler(response http.ResponseWriter, request *http.Request) {
 
 func HotwaterBlingHandler(response http.ResponseWriter, request *http.Request) {
 	t, err := template.ParseFiles("bling/hotwater.html")
+	if err != nil {
+		writeError(response, err, "An unknown error occured")
+		return
+	}
+	t.Execute(response, nil)
+}
+
+func LikeAndSubscribeHandler(response http.ResponseWriter, request *http.Request) {
+	t, err := template.ParseFiles("likeandsub/index.html")
 	if err != nil {
 		writeError(response, err, "An unknown error occured")
 		return
