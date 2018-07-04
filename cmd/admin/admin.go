@@ -1,4 +1,4 @@
-package admin
+package main
 
 import (
 	"fmt"
@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-func Run() {
+func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "DYNO: %s", os.Getenv("DYNO"))
 	})

@@ -1,2 +1,2 @@
-admin: kvn admin
-web: kvn web
+admin: admin
+web: web
