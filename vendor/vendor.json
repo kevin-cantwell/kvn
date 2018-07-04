@@ -1,0 +1,49 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "l1dgFJfzGLG/2AEPyt6ADsnVLPQ=",
+			"path": "github.com/PuerkitoBio/goquery",
+			"revision": "dc2ec5c7ca4d9aae063b79b9f581dd3ea6afd2b2",
+			"revisionTime": "2018-06-07T15:06:10Z"
+		},
+		{
+			"checksumSHA1": "Q/2QpI7E35SsNYfaxLsWHFry9k4=",
+			"path": "github.com/andybalholm/cascadia",
+			"revision": "901648c87902174f774fac311d7f176f8647bdaa",
+			"revisionTime": "2018-02-20T18:43:36Z"
+		},
+		{
+			"checksumSHA1": "YuYKzn2jczaM6DQcFDmukvAHUX4=",
+			"path": "github.com/gorilla/mux",
+			"revision": "b57cb1605fd11ba2ecfa7f68992b4b9cc791934d",
+			"revisionTime": "2018-04-16T20:45:19Z"
+		},
+		{
+			"checksumSHA1": "SXq6IyYeiSBXlGFDCaTvgRalFpk=",
+			"path": "github.com/kurrik/oauth1a",
+			"revision": "cb1b80e32dd4385099f8d09312e4bcf6bdc993ec",
+			"revisionTime": "2015-10-19T17:17:16Z"
+		},
+		{
+			"checksumSHA1": "RBqZAX8NLMTOM8O4WjT/I1F1mao=",
+			"path": "github.com/kurrik/twittergo",
+			"revision": "03842ffa4d870fed145b50fd378fd34e87ceca20",
+			"revisionTime": "2017-08-23T04:03:20Z"
+		},
+		{
+			"checksumSHA1": "u1Q1irO4Z0EeoTHyS26rWGIhMSY=",
+			"path": "golang.org/x/net/html",
+			"revision": "5f9ae10d9af5b1c89ae6904293b14b064d4ada23",
+			"revisionTime": "2018-04-20T07:04:21Z"
+		},
+		{
+			"checksumSHA1": "XtSbs1gpyaEsIqf6VRhJsgOQe5U=",
+			"path": "golang.org/x/net/html/atom",
+			"revision": "5f9ae10d9af5b1c89ae6904293b14b064d4ada23",
+			"revisionTime": "2018-04-20T07:04:21Z"
+		}
+	],
+	"rootPath": "github.com/kevin-cantwell/kvn"
+}
