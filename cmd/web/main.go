@@ -1,4 +1,4 @@
-package main
+package web
 
 import (
 	"encoding/json"
@@ -18,7 +18,7 @@ import (
 	"github.com/kevin-cantwell/kvn/docgifs"
 )
 
-func main() {
+func Run() {
 	go docgifs.PeriodicallyRefresh()
 
 	rand.Seed(time.Now().Unix())
